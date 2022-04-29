@@ -53,9 +53,10 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>AntDesign.ttf</string>
+		<string>AntDesign.tff</string>
+		<string>FontAwesome5_Brands.ttf</string>
 		<string>Entypo.ttf</string>
-		<string>EvilIcons.ttf</string>
+		<string>Evillcons.ttf</string>
 		<string>Feather.ttf</string>
 		<string>FontAwesome.ttf</string>
 		<string>FontAwesome5_Brands.ttf</string>
