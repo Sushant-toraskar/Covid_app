@@ -1,3 +1,4 @@
+import android.os.Bundle;
 package com.covid_app;
 
 import com.facebook.react.ReactActivity;
@@ -14,7 +15,10 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "Covid_App";
   }
-
+  @Override
+protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(null);
+}
   /**
    * Returns the instance of the {@link ReactActivityDelegate}. There the RootView is created and
    * you can specify the rendered you wish to use (Fabric or the older renderer).

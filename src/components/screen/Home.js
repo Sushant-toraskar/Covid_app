@@ -7,35 +7,60 @@ import {
   View,
   ScrollView,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import TypingText from 'react-native-typical';
+import Table from '../Table';
 // import  Search_api  from '../../Api/search_Api';
 import axios from 'axios';
+// import { ActivityIndicator } from 'react-native-paper';
+import { useIsFocused } from '@react-navigation/native';
+
 const Home = () => {
     const [stateName,setStateName] = useState('');
     const [count ,setCount] = useState(false);
+    const [newdata, setNewdata] = useState(' ');
+    const isFocused = useIsFocused();
 
+    const Search_api = async() =>{
+      console.log('in the api');
+      return await axios.get('https://data.covid19india.org/v4/min/data.min.json')
+      .then(function(response){
+        if (response.status == 200) {
+          console.log("response.data : ",response);
+          setNewdata(response.data);
+          // ToastAndroid.show(response.data.message,10000)
+        }else {
+          console.log("response.data : ",response);
+        }
+      })
+      .catch(function(err){
+        console.log('Error is : ',err);
+      })
+  }
     useEffect(()=>{
       Search_api();
-    },[])
-    const Search_api = async() =>{
-      const response = await axios.get('https://api.covid19india.org/state_district_wise.json');
-      // return await axios.get('https://api.covid19india.org/state_district_wise.json',
-      // {
-      //     headers : {
-      //         Accept:'*/*',
-      //     }})
-      // .then(function(resp){
-      //   console.log(resp);
-      // })
-      console.log(response);
-      // .catch(err =>{
-      //     console.log(err);
-      // })
-  }
+      console.log('data',typeof newdata);
+    }, [isFocused]);
+
+
+    if (newdata == ' ' || newdata == null) {
+      console.log('newdata is logged');
+      return(
+        <View style={{
+          height : '100%',
+          width : '100%',
+          justifyContent : 'center',
+        }}>
+      <ActivityIndicator/>
+    </View>
+      )
+      
+    }else{
   return (
+    
     <SafeAreaView>
       <ScrollView>
         <View style={style.navbar_container}>
@@ -120,13 +145,23 @@ const Home = () => {
              </TouchableOpacity>
                 } 
 
-            </View>
-            
+            </View>    
+          </View>
+          <View>
+            {
+              newdata != '' ? 
               
-        </View>
+              <Table tableData = {newdata}/>
+               :
+              <></>
+            }
+            
+          </View>
       </ScrollView>
-    </SafeAreaView>
-  );
+      </SafeAreaView>
+  
+  )
+}
 };
 
 const style = StyleSheet.create({

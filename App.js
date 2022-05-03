@@ -7,9 +7,13 @@
  */
 import React from "react";
 import Home from "./src/components/screen/Home";
+import { NavigationContainer } from '@react-navigation/native';
 const App = () => {
   return (
-    <Home/>
+    <NavigationContainer>
+      <Home/>
+    </NavigationContainer>
+    
   );
 };
 
